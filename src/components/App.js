@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import './../App.css';
+import { useState } from 'react';
+import '../App.css';
 import Nit from './Nit';
 import Form from './Form';
 
@@ -10,9 +10,9 @@ function App() {
     <div className="App">
       {
         (
-          ()=>{
-            if(page===0) return <Nit setPage={setPage} setPersonInfo={setPersonInfo}></Nit>;
-            return <Form setPage={setPage} personInfo={personInfo}></Form>;
+          () => {
+            if (page === 0) return <Nit setPage={setPage} setPersonInfo={setPersonInfo} />;
+            return <Form setPage={setPage} personInfo={personInfo} />;
           }
         )()
       }

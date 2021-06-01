@@ -7,28 +7,28 @@
   pointer-events: none;
 }
 
-.nit-component{
+.nit-component {
   text-align: left;
   margin: 25px;
 }
 
-.nit-form{
+.nit-form {
   width: 50%;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr;
 }
 
-.form-component{
+.form-component {
   text-align: left;
   margin: 25px;
 }
 
-.div-info{
+.div-info {
   width: 50%;
 }
 
-.div-register{
+.div-register {
   width: 50%;
   display: grid;
   grid-template-columns: 1fr;
@@ -59,6 +59,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
