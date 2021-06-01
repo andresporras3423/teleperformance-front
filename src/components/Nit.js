@@ -7,7 +7,7 @@ function Nit(props) {
           <div className="nit-form form-group">
               <label>N.I.T</label>
               <input type="text" className="form-control"></input>
-              <button className="btn btn-danger" onClick={()=>setPage(1)}>Continuar {'>'}</button>
+              <button className="mt-3 btn btn-danger" onClick={()=>setPage(1)}>Continuar {'>'}</button>
           </div>
       </div>
     );
