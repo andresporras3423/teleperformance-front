@@ -114,10 +114,24 @@ function Form(props) {
         }
         <label>Correo electrónico *</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
+        <div>
+          <input className="m-1" type="checkbox" checked={allowEmailMessage} onChange={() => setAllowEmailMessage(!allowEmailMessage)}></input>
+          <label className="m-1">Autorizo que envíen mensajes al correo registrado</label>
+        </div>
+        <div>
+          <input className="m-1" type="checkbox" checked={allowPhoneMessage} onChange={() => setAllowPhoneMessage(!allowPhoneMessage)}></input>
+          <label className="m-1">Autorizo que envíen mensajes al teléfono registrado</label>
+        </div>
+      </div>
+      <div className="buttons">
+      <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
           Continuar
           {'>'}
-        </button>
+      </button>
+      <button className="mt-3 btn btn-dark" onClick={() => setPage(0)}>
+            {'<'}
+            Regresar
+      </button>
       </div>
     </div>
   );

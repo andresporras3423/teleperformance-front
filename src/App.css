@@ -55,6 +55,12 @@
   color: #61dafb;
 }
 
+.buttons{
+  display: grid;
+  grid-gap:10px;
+  grid-template-columns: 1fr 1fr;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
