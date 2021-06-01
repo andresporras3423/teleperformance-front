@@ -10,8 +10,8 @@ function App() {
       {
         (
           ()=>{
-            if(page===0) return <Nit page={page} setPage={setPage}></Nit>;
-            return <Form page={page} setPage={setPage}></Form>;
+            if(page===0) return <Nit setPage={setPage}></Nit>;
+            return <Form setPage={setPage}></Form>;
           }
         )()
       }
