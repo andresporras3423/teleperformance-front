@@ -4,13 +4,13 @@ import {getIdentityTypes} from "./../data/identityTypeData";
 
 function Form(props) {
   const {setPage, personInfo} = props;
-  const [identityTypeId, setIdentityTypeId] = useState(0);
-  const [identityNumber, setIdentityNumber] = useState(0);
-  const [companyName, setCompanyName] = useState(null);
-  const [firstName, setFirstName] = useState(null);
-  const [secondName, setSecondName] = useState(null);
-  const [firstLastname, setFirstLastName] = useState(null);
-  const [secondLastName, setSecondLastName] = useState(null);
+  const [identityTypeId, setIdentityTypeId] = useState("0");
+  const [identityNumber, setIdentityNumber] = useState("0");
+  const [companyName, setCompanyName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [secondName, setSecondName] = useState("");
+  const [firstLastname, setFirstLastName] = useState("");
+  const [secondLastName, setSecondLastName] = useState("");
   const [email, setEmail] = useState("");
   const [allowPhoneMessage, setAllowPhoneMessage] = useState(false);
   const [allowEmailMessage, setAllowEmailMessage] = useState(false);
@@ -19,13 +19,13 @@ function Form(props) {
   useEffect(() => {
     (
       async ()=>{
-        setIdentityTypeId(personInfo.identityTypeId);
-        setIdentityNumber(personInfo.identityNumber);
-        setCompanyName(personInfo.companyName);
-        setFirstName(personInfo.firstName);
-        setSecondName(personInfo.secondName);
-        setFirstLastName(personInfo.firstLastName);
-        setSecondLastName(personInfo.secondLastName);
+        setIdentityTypeId(String(personInfo.identityTypeId));
+        setIdentityNumber(String(personInfo.identityNumber));
+        setCompanyName(personInfo.companyName ?? "");
+        setFirstName(personInfo.firstName ?? "");
+        setSecondName(personInfo.secondName ?? "");
+        setFirstLastName(personInfo.firstLastName ?? "");
+        setSecondLastName(personInfo.secondLastName ?? "");
         setEmail(personInfo.email)
         setAllowPhoneMessage(personInfo.allowPhoneMessage);
         setAllowEmailMessage(personInfo.allowEmailMessage);
@@ -34,7 +34,32 @@ function Form(props) {
       }
     )();
     }, []);
-    if(identityTypes===[]) return <></>;
+
+    const personCompanyName = ()=>{
+      if(identityTypeId==="2" || identityTypeId==="3"){
+        return (
+          <>
+            <label>Nombre de la empresa *</label>
+            <input type="text" value={companyName} onChange={(e)=>setCompanyName(e.target.value)}></input>
+          </>
+        )
+      }
+      else{
+        return (
+          <> 
+         <label>Primer nombre *</label>
+         <input type="text" value={firstName} onChange={(e)=>setFirstName(e.target.value)}></input>
+         <label>Segundo nombre</label>
+         <input type="text" value={secondName} onChange={(e)=>setSecondName(e.target.value)}></input>
+         <label>Primer apellido *</label>
+         <input type="text" value={firstLastname} onChange={(e)=>setFirstLastName(e.target.value)}></input>
+         <label>Segundo apellido</label>
+         <input type="text" value={secondLastName} onChange={(e)=>setSecondLastName(e.target.value)}></input> 
+          </>
+        )
+      }
+    };
+
     return (
       <div className="form-component">
         <h1>Datos de la compañía o persona para el registro</h1>
@@ -54,16 +79,9 @@ function Form(props) {
         </select>
         <label>Número de documento *</label>
         <input type="number" value={identityNumber} onChange={(e)=>setIdentityNumber(e.target.value)}></input>
-        <label>Nombre de la empresa *</label>
-        <input type="text" value={companyName} onChange={(e)=>setCompanyName(e.target.value)}></input>
-        <label>Primer nombre *</label>
-        <input type="text" value={firstName} onChange={(e)=>setFirstName(e.target.value)}></input>
-        <label>Segundo nombre</label>
-        <input type="text" value={secondName} onChange={(e)=>setSecondName(e.target.value)}></input>
-        <label>Primer apellido *</label>
-        <input type="text" value={firstLastname} onChange={(e)=>setFirstLastName(e.target.value)}></input>
-        <label>Segundo apellido</label>
-        <input type="text" value={secondLastName} onChange={(e)=>setSecondLastName(e.target.value)}></input>
+        {
+          personCompanyName()
+        }
         <label>Correo electrónico *</label>
         <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}></input>
         <button className="mt-3 btn btn-danger" onClick={()=>setPage(0)}>Continuar {'>'}</button>
