@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { getIdentityTypes } from '../data/identityTypeData';
+import { updatePerson } from '../data/personData';
 
 function Form(props) {
   const { setPage, personInfo } = props;
@@ -9,12 +10,14 @@ function Form(props) {
   const [companyName, setCompanyName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [secondName, setSecondName] = useState('');
-  const [firstLastname, setFirstLastName] = useState('');
+  const [firstLastName, setFirstLastName] = useState('');
   const [secondLastName, setSecondLastName] = useState('');
   const [email, setEmail] = useState('');
   const [allowPhoneMessage, setAllowPhoneMessage] = useState(false);
   const [allowEmailMessage, setAllowEmailMessage] = useState(false);
   const [identityTypes, setIdentityTypes] = useState([]);
+  const nullConverter = {"": null};
+
 
   useEffect(() => {
     (
@@ -35,6 +38,34 @@ function Form(props) {
     )();
   }, []);
 
+  const updateIdentityTypeId = (newId)=>{
+    setIdentityTypeId(newId);
+    if(newId==="2" || newId==="3"){
+      setFirstName("");
+      setSecondName("");
+      setFirstLastName("");
+      setSecondLastName("");
+    }else{
+      setCompanyName("");
+    }
+  };
+
+  const updatePersonInfo = async ()=>{
+    const data = await updatePerson(personInfo.id, identityTypeId, 
+      identityNumber, 
+      nullConverter[companyName] ?? companyName,
+      nullConverter[firstName] ?? firstName, 
+      nullConverter[secondName] ?? secondName,
+      nullConverter[firstLastName] ?? firstLastName, 
+      nullConverter[secondLastName] ?? secondLastName,
+      email, allowEmailMessage, allowPhoneMessage);
+      if(data==="0"){
+        window.alert("registro exitoso");
+        setPage(0);
+      }
+      else window.alert(data);
+  }
+
   const personCompanyName = () => {
     if (identityTypeId === '2' || identityTypeId === '3') {
       return (
@@ -52,7 +83,7 @@ function Form(props) {
         <label>Segundo nombre</label>
         <input type="text" value={secondName} onChange={(e) => setSecondName(e.target.value)} />
         <label>Primer apellido *</label>
-        <input type="text" value={firstLastname} onChange={(e) => setFirstLastName(e.target.value)} />
+        <input type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
         <label>Segundo apellido</label>
         <input type="text" value={secondLastName} onChange={(e) => setSecondLastName(e.target.value)} />
       </>
@@ -69,7 +100,7 @@ function Form(props) {
 
       <div className="div-register">
         <label>Tipo de documento *</label>
-        <select value={identityTypeId} onChange={(e) => setIdentityTypeId(e.target.value)}>
+        <select value={identityTypeId} onChange={(e) => updateIdentityTypeId(e.target.value)}>
           {
               (identityTypes ?? []).map((type) => (
                 <option value={type.id} key={nanoid()}>{type.type}</option>
@@ -83,7 +114,7 @@ function Form(props) {
         }
         <label>Correo electrónico *</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <button className="mt-3 btn btn-danger" onClick={() => setPage(0)}>
+        <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
           Continuar
           {'>'}
         </button>
