@@ -5,13 +5,14 @@ import Form from './Form';
 
 function App() {
   const [page, setPage] = useState(0);
+  const [personInfo, setPersonInfo] = useState({});
   return (
     <div className="App">
       {
         (
           ()=>{
-            if(page===0) return <Nit setPage={setPage}></Nit>;
-            return <Form setPage={setPage}></Form>;
+            if(page===0) return <Nit setPage={setPage} setPersonInfo={setPersonInfo}></Nit>;
+            return <Form setPage={setPage} personInfo={personInfo}></Form>;
           }
         )()
       }

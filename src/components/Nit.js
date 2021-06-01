@@ -2,12 +2,16 @@ import {useState} from 'react';
 import {getPerson} from "./../data/personData";
 
 function Nit(props) {
-    const {setPage} = props;
+    const {setPage, setPersonInfo} = props;
     const [nit, setNit] = useState("");
 
     const findPerson = async ()=>{
       const data = await getPerson(nit);
       if(data['error']) window.alert(data['error']);
+      else{
+        setPersonInfo(data);
+        setPage(1);
+      }
     };
 
     return (
