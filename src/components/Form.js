@@ -16,9 +16,8 @@ function Form(props) {
   const [allowPhoneMessage, setAllowPhoneMessage] = useState(false);
   const [allowEmailMessage, setAllowEmailMessage] = useState(false);
   const [identityTypes, setIdentityTypes] = useState([]);
-  const nullConverter = {"": null};
+  const nullConverter = { '': null };
   const mailValidator = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-
 
   useEffect(() => {
     (
@@ -39,47 +38,44 @@ function Form(props) {
     )();
   }, []);
 
-  const validForm=()=>{
-    if (identityTypeId === '2' || identityTypeId === '3'){
-      if(identityNumber!=="" && companyName!=="" && mailValidator.test(email)) return true;
+  const validForm = () => {
+    if (identityTypeId === '2' || identityTypeId === '3') {
+      if (identityNumber !== '' && companyName !== '' && mailValidator.test(email)) return true;
       return false;
     }
-    else{
-      if(firstName!=="" && firstLastName!=="" && companyName!=="" && mailValidator.test(email)) return true;
-      return false;
-    }
+    if (firstName !== '' && firstLastName !== '' && companyName !== '' && mailValidator.test(email)) return true;
+    return false;
   };
 
-  const updateIdentityTypeId = (newId)=>{
+  const updateIdentityTypeId = (newId) => {
     setIdentityTypeId(newId);
-    if(newId==="2" || newId==="3"){
-      setFirstName("");
-      setSecondName("");
-      setFirstLastName("");
-      setSecondLastName("");
-    }else{
-      setCompanyName("");
+    if (newId === '2' || newId === '3') {
+      setFirstName('');
+      setSecondName('');
+      setFirstLastName('');
+      setSecondLastName('');
+    } else {
+      setCompanyName('');
     }
   };
 
-  const updatePersonInfo = async ()=>{
-    if(!validForm()) window.alert("formulario no es válido");
-    else{
-      const data = await updatePerson(personInfo.id, identityTypeId, 
-        identityNumber, 
+  const updatePersonInfo = async () => {
+    if (!validForm()) window.alert('formulario no es válido');
+    else {
+      const data = await updatePerson(personInfo.id, identityTypeId,
+        identityNumber,
         nullConverter[companyName] ?? companyName,
-        nullConverter[firstName] ?? firstName, 
+        nullConverter[firstName] ?? firstName,
         nullConverter[secondName] ?? secondName,
-        nullConverter[firstLastName] ?? firstLastName, 
+        nullConverter[firstLastName] ?? firstLastName,
         nullConverter[secondLastName] ?? secondLastName,
         email, allowEmailMessage, allowPhoneMessage);
-        if(data==="0"){
-          window.alert("registro exitoso");
-          setPage(0);
-        }
-        else window.alert(data);
+      if (data === '0') {
+        window.alert('registro exitoso');
+        setPage(0);
+      } else window.alert(data);
     }
-  }
+  };
 
   const personCompanyName = () => {
     if (identityTypeId === '2' || identityTypeId === '3') {
@@ -87,7 +83,7 @@ function Form(props) {
         <>
           <label>Nombre de la empresa *</label>
           <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-          {companyName==="" && (<p className="text-danger">campo requerido</p>)}
+          {companyName === '' && (<p className="text-danger">campo requerido</p>)}
         </>
       );
     }
@@ -96,12 +92,12 @@ function Form(props) {
       <>
         <label>Primer nombre *</label>
         <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        {firstName==="" && (<p className="text-danger">campo requerido</p>)}
+        {firstName === '' && (<p className="text-danger">campo requerido</p>)}
         <label>Segundo nombre</label>
         <input type="text" value={secondName} onChange={(e) => setSecondName(e.target.value)} />
         <label>Primer apellido *</label>
         <input type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
-        {firstLastName==="" && (<p className="text-danger">campo requerido</p>)}
+        {firstLastName === '' && (<p className="text-danger">campo requerido</p>)}
         <label>Segundo apellido</label>
         <input type="text" value={secondLastName} onChange={(e) => setSecondLastName(e.target.value)} />
       </>
@@ -127,7 +123,7 @@ function Form(props) {
         </select>
         <label>Número de documento *</label>
         <input type="number" value={identityNumber} onChange={(e) => setIdentityNumber(e.target.value)} />
-        {identityNumber==="" && (<p className="text-danger">campo requerido</p>)}
+        {identityNumber === '' && (<p className="text-danger">campo requerido</p>)}
         {
           personCompanyName()
         }
@@ -135,21 +131,25 @@ function Form(props) {
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         {!mailValidator.test(email) && (<p className="text-danger">correo no válido</p>)}
         <div>
-          <input className="m-1" type="checkbox" checked={allowEmailMessage} onChange={() => setAllowEmailMessage(!allowEmailMessage)}></input>
+          <input className="m-1" type="checkbox" checked={allowEmailMessage} onChange={() => setAllowEmailMessage(!allowEmailMessage)} />
           <label className="m-1">Autorizo que envíen mensajes al correo registrado</label>
         </div>
         <div>
-          <input className="m-1" type="checkbox" checked={allowPhoneMessage} onChange={() => setAllowPhoneMessage(!allowPhoneMessage)}></input>
+          <input className="m-1" type="checkbox" checked={allowPhoneMessage} onChange={() => setAllowPhoneMessage(!allowPhoneMessage)} />
           <label className="m-1">Autorizo que envíen mensajes al teléfono registrado</label>
         </div>
       </div>
       <div className="buttons">
-      <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
-        Continuar  <i class="fas fa-arrow-right"></i>
-      </button>
-      <button className="mt-3 btn btn-dark" onClick={() => setPage(0)}>
-      <i class="fas fa-arrow-left"></i>  Regresar
-      </button>
+        <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
+          Continuar
+          {' '}
+          <i className="fas fa-arrow-right" />
+        </button>
+        <button className="mt-3 btn btn-dark" onClick={() => setPage(0)}>
+          <i className="fas fa-arrow-left" />
+          {' '}
+          Regresar
+        </button>
       </div>
     </div>
   );

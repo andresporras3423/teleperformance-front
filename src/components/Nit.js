@@ -6,14 +6,14 @@ function Nit(props) {
   const [nit, setNit] = useState('');
 
   const findPerson = async () => {
-    if(nit==="") window.alert("ingrese un valor válido");
-    else{
-      const data = await getPerson(nit);
-    if (data.error) window.alert(data.error);
+    if (nit === '') window.alert('ingrese un valor válido');
     else {
-      setPersonInfo(data);
-      setPage(1);
-    }
+      const data = await getPerson(nit);
+      if (data.error) window.alert(data.error);
+      else {
+        setPersonInfo(data);
+        setPage(1);
+      }
     }
   };
 
@@ -31,12 +31,16 @@ function Nit(props) {
         <input type="number" className="form-control" value={nit} onChange={(e) => setNit(e.target.value)} />
       </div>
       <div className="buttons">
-      <button className="mt-3 btn btn-danger" onClick={() => findPerson()}>
-          Continuar  <i class="fas fa-arrow-right"></i>
+        <button className="mt-3 btn btn-danger" onClick={() => findPerson()}>
+          Continuar
+          {' '}
+          <i className="fas fa-arrow-right" />
         </button>
-      <button className="mt-3 btn btn-dark">
-      <i class="fas fa-arrow-left"></i>  Regresar
-      </button>
+        <button className="mt-3 btn btn-dark">
+          <i className="fas fa-arrow-left" />
+          {' '}
+          Regresar
+        </button>
       </div>
     </div>
   );
