@@ -21,7 +21,8 @@ function Nit(props) {
     <div className="nit-component">
       <h1>Inscripción al servicio:</h1>
       <p>
-        Ingrese el NIT de la persona natural o jurídica para la que realizará el trámite, sin incluir el dígito de verificación. Luego selecciones
+        Ingrese el NIT de la persona natural o jurídica para la que realizará el trámite, sin incluir el dígito de verificación. Luego selecciona
+        {' '}
         <strong>Continuar</strong>
         {' '}
         para completar su solicitud.

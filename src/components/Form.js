@@ -43,7 +43,7 @@ function Form(props) {
       if (identityNumber !== '' && companyName !== '' && mailValidator.test(email)) return true;
       return false;
     }
-    if (firstName !== '' && firstLastName !== '' && companyName !== '' && mailValidator.test(email)) return true;
+    if (firstName !== '' && firstLastName !== '' && identityNumber !== '' && mailValidator.test(email)) return true;
     return false;
   };
 
