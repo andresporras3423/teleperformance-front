@@ -32,12 +32,10 @@ function Nit(props) {
       </div>
       <div className="buttons">
       <button className="mt-3 btn btn-danger" onClick={() => findPerson()}>
-          Continuar
-          {'>'}
+          Continuar  <i class="fas fa-arrow-right"></i>
         </button>
       <button className="mt-3 btn btn-dark">
-            {'<'}
-            Regresar
+      <i class="fas fa-arrow-left"></i>  Regresar
       </button>
       </div>
     </div>

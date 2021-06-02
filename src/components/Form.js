@@ -145,12 +145,10 @@ function Form(props) {
       </div>
       <div className="buttons">
       <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
-        Continuar
-        {'>'}
+        Continuar  <i class="fas fa-arrow-right"></i>
       </button>
       <button className="mt-3 btn btn-dark" onClick={() => setPage(0)}>
-            {'<'}
-            Regresar
+      <i class="fas fa-arrow-left"></i>  Regresar
       </button>
       </div>
     </div>
