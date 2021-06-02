@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { getIdentityTypes } from '../data/identityTypeData';
 import { updatePerson } from '../data/personData';
+import PropTypes from 'prop-types';
 
 function Form(props) {
   const { setPage, personInfo } = props;
@@ -128,7 +129,7 @@ function Form(props) {
           personCompanyName()
         }
         <label>Correo electrónico *</label>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         {!mailValidator.test(email) && (<p className="text-danger">correo no válido</p>)}
         <div>
           <input className="m-1" type="checkbox" checked={allowEmailMessage} onChange={() => setAllowEmailMessage(!allowEmailMessage)} />
@@ -154,5 +155,15 @@ function Form(props) {
     </div>
   );
 }
+
+Form.propTypes = {
+  setPage: PropTypes.func,
+  personInfo: PropTypes.instanceOf(Object),
+};
+
+Form.defaultProps = {
+  setPage: null,
+  personInfo: null,
+};
 
 export default Form;

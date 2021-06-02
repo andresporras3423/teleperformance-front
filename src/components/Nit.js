@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getPerson } from '../data/personData';
+import PropTypes from 'prop-types';
 
 function Nit(props) {
   const { setPage, setPersonInfo } = props;
@@ -46,5 +47,15 @@ function Nit(props) {
     </div>
   );
 }
+
+Nit.propTypes = {
+  setPage: PropTypes.func,
+  setPersonInfo: PropTypes.func,
+};
+
+Nit.defaultProps = {
+  setPage: null,
+  setPersonInfo: null,
+};
 
 export default Nit;
