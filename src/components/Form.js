@@ -17,6 +17,7 @@ function Form(props) {
   const [allowEmailMessage, setAllowEmailMessage] = useState(false);
   const [identityTypes, setIdentityTypes] = useState([]);
   const nullConverter = {"": null};
+  const mailValidator = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
 
   useEffect(() => {
@@ -38,6 +39,17 @@ function Form(props) {
     )();
   }, []);
 
+  const validForm=()=>{
+    if (identityTypeId === '2' || identityTypeId === '3'){
+      if(identityNumber!=="" && companyName!=="" && mailValidator.test(email)) return true;
+      return false;
+    }
+    else{
+      if(firstName!=="" && firstLastName!=="" && companyName!=="" && mailValidator.test(email)) return true;
+      return false;
+    }
+  };
+
   const updateIdentityTypeId = (newId)=>{
     setIdentityTypeId(newId);
     if(newId==="2" || newId==="3"){
@@ -51,19 +63,22 @@ function Form(props) {
   };
 
   const updatePersonInfo = async ()=>{
-    const data = await updatePerson(personInfo.id, identityTypeId, 
-      identityNumber, 
-      nullConverter[companyName] ?? companyName,
-      nullConverter[firstName] ?? firstName, 
-      nullConverter[secondName] ?? secondName,
-      nullConverter[firstLastName] ?? firstLastName, 
-      nullConverter[secondLastName] ?? secondLastName,
-      email, allowEmailMessage, allowPhoneMessage);
-      if(data==="0"){
-        window.alert("registro exitoso");
-        setPage(0);
-      }
-      else window.alert(data);
+    if(!validForm()) window.alert("formulario no es válido");
+    else{
+      const data = await updatePerson(personInfo.id, identityTypeId, 
+        identityNumber, 
+        nullConverter[companyName] ?? companyName,
+        nullConverter[firstName] ?? firstName, 
+        nullConverter[secondName] ?? secondName,
+        nullConverter[firstLastName] ?? firstLastName, 
+        nullConverter[secondLastName] ?? secondLastName,
+        email, allowEmailMessage, allowPhoneMessage);
+        if(data==="0"){
+          window.alert("registro exitoso");
+          setPage(0);
+        }
+        else window.alert(data);
+    }
   }
 
   const personCompanyName = () => {
@@ -72,6 +87,7 @@ function Form(props) {
         <>
           <label>Nombre de la empresa *</label>
           <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+          {companyName==="" && (<p className="text-danger">campo requerido</p>)}
         </>
       );
     }
@@ -80,10 +96,12 @@ function Form(props) {
       <>
         <label>Primer nombre *</label>
         <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        {firstName==="" && (<p className="text-danger">campo requerido</p>)}
         <label>Segundo nombre</label>
         <input type="text" value={secondName} onChange={(e) => setSecondName(e.target.value)} />
         <label>Primer apellido *</label>
         <input type="text" value={firstLastName} onChange={(e) => setFirstLastName(e.target.value)} />
+        {firstLastName==="" && (<p className="text-danger">campo requerido</p>)}
         <label>Segundo apellido</label>
         <input type="text" value={secondLastName} onChange={(e) => setSecondLastName(e.target.value)} />
       </>
@@ -109,11 +127,13 @@ function Form(props) {
         </select>
         <label>Número de documento *</label>
         <input type="number" value={identityNumber} onChange={(e) => setIdentityNumber(e.target.value)} />
+        {identityNumber==="" && (<p className="text-danger">campo requerido</p>)}
         {
           personCompanyName()
         }
         <label>Correo electrónico *</label>
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        {!mailValidator.test(email) && (<p className="text-danger">correo no válido</p>)}
         <div>
           <input className="m-1" type="checkbox" checked={allowEmailMessage} onChange={() => setAllowEmailMessage(!allowEmailMessage)}></input>
           <label className="m-1">Autorizo que envíen mensajes al correo registrado</label>
@@ -125,8 +145,8 @@ function Form(props) {
       </div>
       <div className="buttons">
       <button className="mt-3 btn btn-danger" onClick={() => updatePersonInfo()}>
-          Continuar
-          {'>'}
+        Continuar
+        {'>'}
       </button>
       <button className="mt-3 btn btn-dark" onClick={() => setPage(0)}>
             {'<'}
