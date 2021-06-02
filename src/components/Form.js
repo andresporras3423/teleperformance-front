@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 import { getIdentityTypes } from '../data/identityTypeData';
 import { updatePerson } from '../data/personData';
-import PropTypes from 'prop-types';
 
 function Form(props) {
   const { setPage, personInfo } = props;

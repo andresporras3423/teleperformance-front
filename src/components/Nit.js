@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { getPerson } from '../data/personData';
 import PropTypes from 'prop-types';
+import { getPerson } from '../data/personData';
 
 function Nit(props) {
   const { setPage, setPersonInfo } = props;
